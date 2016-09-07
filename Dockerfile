@@ -4,14 +4,14 @@ MAINTAINER Sergey Zhekpisov <zhekpisov@gmail.com>
 
 # Basic packages
 RUN rpm -Uvh http://fedora-mirror01.rbc.ru/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm \
-  && yum -y install passwd sudo git wget openssl openssh openssh-server openssh-clients
+  && yum -y install passwd sudo git wget openssl openssh openssh-server openssh-clients rubygems ruby-devel gcc make
 
 # Create user
 RUN useradd sensuuser \
  && echo "sensuuser" | passwd sensu --stdin \
  && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
  && sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config \
- && echo "sensuuser ALL=(ALL) ALL" >> /etc/sudoers.d/sensu
+ && echo "sensuuser ALL=(ALL) ALL" >> /etc/sudoers.d/sensuuser
 
 # Redis
 RUN yum install -y redis
