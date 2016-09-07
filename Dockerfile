@@ -8,7 +8,7 @@ RUN rpm -Uvh http://fedora-mirror01.rbc.ru/pub/epel/7/x86_64/e/epel-release-7-8.
 
 # Create user
 RUN useradd sensuuser \
- && echo "sensuuser" | passwd sensu --stdin \
+ && echo "sensu" | passwd sensuuser --stdin \
  && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
  && sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config \
  && echo "sensuuser ALL=(ALL) ALL" >> /etc/sudoers.d/sensuuser
@@ -17,10 +17,10 @@ RUN useradd sensuuser \
 RUN yum install -y redis
 
 # RabbitMQ
-RUN yum install -y erlang \
+RUN yum install -y erlang socat initscripts \
   && rpm --import http://www.rabbitmq.com/rabbitmq-signing-key-public.asc \
-  && rpm -Uvh http://www.rabbitmq.com/releases/rabbitmq-server/v3.1.4/rabbitmq-server-3.1.4-1.noarch.rpm \
-  && git clone git://github.com/joemiller/joemiller.me-intro-to-sensu.git \
+  && rpm -Uvh http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.5/rabbitmq-server-3.6.5-1.noarch.rpm
+RUN git clone https://github.com/joemiller/joemiller.me-intro-to-sensu.git \
   && cd joemiller.me-intro-to-sensu/; ./ssl_certs.sh clean && ./ssl_certs.sh generate \
   && mkdir /etc/rabbitmq/ssl \
   && cp /joemiller.me-intro-to-sensu/server_cert.pem /etc/rabbitmq/ssl/cert.pem \
