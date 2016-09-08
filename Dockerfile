@@ -3,8 +3,8 @@ FROM centos:centos7
 MAINTAINER Sergey Zhekpisov <zhekpisov@gmail.com>
 
 # Basic packages
-RUN rpm -Uvh http://fedora-mirror01.rbc.ru/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm \
-  && yum -y install passwd sudo git wget openssl openssh openssh-server openssh-clients rubygems ruby-devel gcc make
+RUN rpm -Uvh http://fedora-mirror01.rbc.ru/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm
+RUN yum -y install passwd sudo git wget openssl openssh openssh-server openssh-clients rubygems ruby-devel gcc make
 
 # Create user
 RUN useradd sensuuser \
@@ -27,7 +27,7 @@ RUN git clone https://github.com/joemiller/joemiller.me-intro-to-sensu.git \
   && cp /joemiller.me-intro-to-sensu/server_key.pem /etc/rabbitmq/ssl/key.pem \
   && cp /joemiller.me-intro-to-sensu/testca/cacert.pem /etc/rabbitmq/ssl/
 ADD ./files/rabbitmq.config /etc/rabbitmq/
-RUN rabbitmq-plugins enable rabbitmq_management
+#RUN rabbitmq-plugins enable rabbitmq_management
 
 # Sensu server
 ADD ./files/sensu.repo /etc/yum.repos.d/
@@ -46,9 +46,9 @@ RUN wget http://peak.telecommunity.com/dist/ez_setup.py;python ez_setup.py \
   && easy_install supervisor
 ADD files/supervisord.conf /etc/supervisord.conf
 
-RUN /etc/init.d/sshd start && /etc/init.d/sshd stop
-
 EXPOSE 22 3000 4567 5671 15672
+
+RUN yum -y install net-tools
 
 CMD ["/usr/bin/supervisord"]
 
