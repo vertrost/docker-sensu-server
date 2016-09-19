@@ -22,7 +22,7 @@ docker build -t yourname/docker-sensu-server .
 ## Run
 
 ```
-docker run -d -p 10022:22 -p 3000:3000 -p 4567:4567 -p 5671:5671 -p 15672:15672 vertrost/docker-sensu-server
+docker run -d -p 10022:22 -p 3000:3000 -p 4567:4567 -p 5672:5672 -p 15672:15672 vertrost/docker-sensu-server
 ```
 
 ## How to access via browser and sensu-client
@@ -48,7 +48,7 @@ These are examples of sensu-client configuration.
 {
   "rabbitmq": {
     "host": "sensu-server-ipaddr",
-    "port": 5671,
+    "port": 5672,
     "vhost": "/sensu",
     "user": "sensu",
     "password": "password",
