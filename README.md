@@ -1,17 +1,11 @@
 # docker-sensu-server
 
-CentOS and sensu.
-It runs redis, rabbitmq-server, uchiwa, sensu-api, sensu-server and ssh processes.
+CentOS 7 and sensu.
+It runs redis, rabbitmq-server, uchiwa, sensu-api, sensu-server, supervisord.
 
 ## Installation
 
-Install from docker index or build from Dockerfile
-
-```
-docker pull vertrost/docker-sensu-server
-```
-
-or
+Install from Dockerfile
 
 ```
 git clone https://github.com/vertrost/docker-sensu-server.git
@@ -47,8 +41,8 @@ These are examples of sensu-client configuration.
 ```
 {
   "rabbitmq": {
-    "host": "sensu-server-ipaddr",
-    "port": 5672,
+    "host": "localhost",
+    "port": 5671,
     "vhost": "/sensu",
     "user": "sensu",
     "password": "password",
@@ -58,34 +52,6 @@ These are examples of sensu-client configuration.
     }
   }
 }
-```
-
-* /etc/sensu/conf.d/client.json
-
-```
-{
-  "client": {
-    "name": "sensu-client-node-hostname",
-    "address": "sensu-client-node-ipaddr",
-    "subscriptions": [
-      "common",
-      "web"
-    ]
-  },
-  "keepalive": {
-    "thresholds": {
-      "critical": 60
-    },
-    "refresh": 300
-  }
-}
-```
-
-## ssh login
-
-```
-ssh sensuuser@localhost -p 10022
-password: sensu
 ```
 
 ## License
